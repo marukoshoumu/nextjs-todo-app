@@ -5,6 +5,8 @@ import SupabaseProvider from "./components/supabase-provider";
 import "../styles/globals.css";
 import Navigation from "./components/navigation";
 import { createClient } from "../utils/supabase-server";
+import Head from "./head";
+import HeadItem from "next/head";
 
 // キャッシュをしない
 export const revalidate = 0;
@@ -21,6 +23,10 @@ const RootLayout = async ({ children }: { children: React.ReactNode }) => {
   return (
     <html>
       <body>
+        <HeadItem>
+          <Head />
+          <link rel="icon" href="/favicon.ico" />
+        </HeadItem>
         <SupabaseProvider>
           <SupabaseListener serverAccessToken={session?.access_token} />
 
