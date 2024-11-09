@@ -4,7 +4,6 @@ import { format } from "date-fns";
 import type { TodoListType } from "../../../utils/todo.types";
 
 import Link from "next/link";
-import Image from "next/image";
 
 // ブログアイテム
 const TodoItem = (todo: TodoListType) => {
@@ -20,10 +19,11 @@ const TodoItem = (todo: TodoListType) => {
     <div className="break-words">
       <Link href={`todo/${todo.id}`}>
         <div className="text-gray-500 text-sm">
-          {format(new Date(todo.created_at), "yyyy/MM/dd HH:mm")}
+          作成日：{format(new Date(todo.created_at), "yyyy/MM/dd HH:mm")}
         </div>
         <div className="font-bold text-xl">{todo.title}</div>
         <div className="mb-3 text-gray-500">{content}</div>
+        <div className="mb-3 text-gray-500">ステータス：{todo.status}</div>
       </Link>
     </div>
   );

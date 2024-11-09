@@ -4,10 +4,8 @@ import { useEffect, useState } from "react";
 import { format } from "date-fns";
 import { useRouter } from "next/navigation";
 import { useSupabase } from "../supabase-provider";
-
 import Link from "next/link";
 import useStore from "../../../store";
-import Image from "next/image";
 import Loading from "../../loading";
 
 import type { TodoListType } from "../../../utils/todo.types";
@@ -15,7 +13,6 @@ type PageProps = {
   todo: TodoListType;
 };
 
-// TODO詳細
 const TodoDetail = ({ todo }: PageProps) => {
   const { supabase } = useSupabase();
   const router = useRouter();
@@ -23,11 +20,9 @@ const TodoDetail = ({ todo }: PageProps) => {
   const [myTodo, setMyTodo] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  // TODO削除
   const deleteTodo = async () => {
     setLoading(true);
 
-    // supabaseTODO削除
     const { error } = await supabase.from("todos").delete().eq("id", todo.id);
 
     if (error) {
@@ -36,14 +31,12 @@ const TodoDetail = ({ todo }: PageProps) => {
       return;
     }
 
-    // トップページに遷移
-    router.push(`/`);
+    router.push(`/todo`);
     router.refresh();
 
     setLoading(false);
   };
 
-  // 自分が投稿したTODOのみ、編集削除ボタンを表示
   const renderButton = () => {
     if (myTodo) {
       return (
@@ -64,7 +57,6 @@ const TodoDetail = ({ todo }: PageProps) => {
   };
 
   useEffect(() => {
-    // 自分が投稿したTODOチェック
     if (user.id === todo.user_id) {
       setMyTodo(true);
     }
@@ -73,17 +65,26 @@ const TodoDetail = ({ todo }: PageProps) => {
   return (
     <div className="max-w-screen-md mx-auto">
       <div className="flex flex-col items-center justify-center mb-5">
-        <div className="font-bold text-gray-500">{todo.name}</div>
         <div className="text-sm text-gray-500">
-          {format(new Date(todo.created_at), "yyyy/MM/dd HH:mm")}
+          作成日：{format(new Date(todo.created_at), "yyyy/MM/dd HH:mm")}
         </div>
       </div>
 
       <div className="mb-5">
         <div className="text-center font-bold text-3xl mb-5">{todo.title}</div>
-        <div className="leading-relaxed break-words whitespace-pre-wrap">
+        <div className="leading-relaxed break-words whitespace-pre-wrap mb-5">
           {todo.content}
         </div>
+        <div className="text-sm text-gray-500 mb-2">
+          ステータス: <span className="font-semibold">{todo.status}</span>
+        </div>
+        {todo.comment && (
+          <div className="bg-gray-100 p-3 rounded">
+            <div className="leading-relaxed break-words whitespace-pre-wrap">
+              {todo.comment}
+            </div>
+          </div>
+        )}
       </div>
 
       {renderButton()}

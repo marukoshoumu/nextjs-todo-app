@@ -1,55 +1,55 @@
-'use client'
+"use client";
 
-import { useRef, FormEvent, useState } from 'react'
-import { useRouter } from 'next/navigation'
-import { useSupabase } from '../supabase-provider'
+import { useRef, FormEvent, useState } from "react";
+import { useRouter } from "next/navigation";
+import { useSupabase } from "../supabase-provider";
 
-import Link from 'next/link'
-import Loading from '../../loading'
+import Link from "next/link";
+import Loading from "../../loading";
 
 // サインアップ
 const Singup = () => {
-  const { supabase } = useSupabase()
-  const router = useRouter()
-  const nameRef = useRef<HTMLInputElement>(null)
-  const emailRef = useRef<HTMLInputElement>(null)
-  const passwordRef = useRef<HTMLInputElement>(null)
-  const [loading, setLoading] = useState(false)
+  const { supabase } = useSupabase();
+  const router = useRouter();
+  const nameRef = useRef<HTMLInputElement>(null);
+  const emailRef = useRef<HTMLInputElement>(null);
+  const passwordRef = useRef<HTMLInputElement>(null);
+  const [loading, setLoading] = useState(false);
 
   // 送信
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    setLoading(true)
+    e.preventDefault();
+    setLoading(true);
 
     // supabaseサインアップ
     const { error: signupError } = await supabase.auth.signUp({
       email: emailRef.current!.value,
       password: passwordRef.current!.value,
-    })
+    });
 
     if (signupError) {
-      alert(signupError.message)
-      setLoading(false)
-      return
+      alert(signupError.message);
+      setLoading(false);
+      return;
     }
 
     // プロフィールの名前を更新
     const { error: updateError } = await supabase
-      .from('profiles')
+      .from("profiles")
       .update({ name: nameRef.current!.value })
-      .eq('email', emailRef.current!.value)
+      .eq("email", emailRef.current!.value);
 
     if (updateError) {
-      alert(updateError.message)
-      setLoading(false)
-      return
+      alert(updateError.message);
+      setLoading(false);
+      return;
     }
 
     // トップページに遷移
-    router.push('/')
+    router.push("/todo");
 
-    setLoading(false)
-  }
+    setLoading(false);
+  };
 
   return (
     <div className="max-w-sm mx-auto">
@@ -111,7 +111,7 @@ const Singup = () => {
         </Link>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Singup
+export default Singup;

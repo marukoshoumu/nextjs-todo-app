@@ -4,5 +4,6 @@ export interface TodoListType {
   title: string;
   content: string;
   user_id: string;
-  name: string | null;
+  status: string | null;
+  comment: string | null;
 }

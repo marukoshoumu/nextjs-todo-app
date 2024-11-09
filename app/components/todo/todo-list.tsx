@@ -1,47 +1,42 @@
-import { notFound } from "next/navigation";
-import { createClient } from "../../../utils/supabase-server";
+// todo-list.tsx
+"use client";
 
 import TodoItem from "./todo-item";
+import TodoFilter from "./todo-filter";
+import { useState, useEffect } from "react";
 
-// ブログリスト
-const TodoList = async () => {
-  const supabase = createClient();
+type Todo = {
+  id: string;
+  created_at: string;
+  title: string;
+  content: string;
+  user_id: string;
+  status: string;
+  comment: string | null;
+};
 
-  // ブログリスト取得
-  const { data: todosData } = await supabase
-    .from("todos")
-    .select()
-    .order("created_at", { ascending: false });
+type Props = {
+  todos: Todo[];
+};
 
-  // ブログリストが見つからない場合
-  if (!todosData) return notFound();
+const TodoList = ({ todos }: Props) => {
+  const [status, setStatus] = useState("all");
+  const [filteredTodos, setFilteredTodos] = useState<Todo[]>(todos);
+
+  useEffect(() => {
+    setFilteredTodos(
+      status === "all" ? todos : todos.filter((todo) => todo.status === status)
+    );
+  }, [status, todos]);
 
   return (
-    <div className="grid grid-cols-3 gap-5">
-      {/* mapでasync/awaitを使用するためPromise.allを使用 */}
-      {await Promise.all(
-        todosData.map(async (todoData) => {
-          // プロフィール取得
-          const { data: userData } = await supabase
-            .from("profiles")
-            .select()
-            .eq("id", todoData.user_id)
-            .single();
-
-          // ブログとプロフィールのテーブルを結合
-          const todo = {
-            id: todoData.id,
-            created_at: todoData.created_at,
-            title: todoData.title,
-            content: todoData.content,
-            user_id: todoData.user_id,
-            name: userData!.name,
-            avatar_url: userData!.avatar_url,
-          };
-
-          return <TodoItem key={todo.id} {...todo} />;
-        })
-      )}
+    <div>
+      <TodoFilter status={status} setStatus={setStatus} />
+      <div className="grid grid-cols-3 gap-5">
+        {filteredTodos.map((todo) => (
+          <TodoItem key={todo.id} {...todo} />
+        ))}
+      </div>
     </div>
   );
 };

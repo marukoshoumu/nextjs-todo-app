@@ -1,43 +1,43 @@
-'use client'
+"use client";
 
-import { useRef, FormEvent, useState } from 'react'
-import { useRouter } from 'next/navigation'
-import { useSupabase } from '../supabase-provider'
+import { useRef, FormEvent, useState } from "react";
+import { useRouter } from "next/navigation";
+import { useSupabase } from "../supabase-provider";
 
-import Link from 'next/link'
-import Loading from '../../loading'
+import Link from "next/link";
+import Loading from "../../loading";
 
 // ログイン
 const Login = () => {
-  const { supabase } = useSupabase()
-  const router = useRouter()
-  const emailRef = useRef<HTMLInputElement>(null)
-  const passwordRef = useRef<HTMLInputElement>(null)
-  const [loading, setLoading] = useState(false)
+  const { supabase } = useSupabase();
+  const router = useRouter();
+  const emailRef = useRef<HTMLInputElement>(null);
+  const passwordRef = useRef<HTMLInputElement>(null);
+  const [loading, setLoading] = useState(false);
 
   // 送信
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    setLoading(true)
+    e.preventDefault();
+    setLoading(true);
 
     // ログイン処理
     // 認証はクライアントコンポーネントで行う
     const { error: signinError } = await supabase.auth.signInWithPassword({
       email: emailRef.current!.value,
       password: passwordRef.current!.value,
-    })
+    });
 
     if (signinError) {
-      alert(signinError.message)
-      setLoading(false)
-      return
+      alert(signinError.message);
+      setLoading(false);
+      return;
     }
 
     // トップページ遷移
-    router.push('/')
+    router.push("/todo");
 
-    setLoading(false)
-  }
+    setLoading(false);
+  };
 
   return (
     <div className="max-w-sm mx-auto">
@@ -87,7 +87,7 @@ const Login = () => {
         </Link>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Login
+export default Login;

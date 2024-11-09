@@ -24,13 +24,6 @@ const TodoDetailPage = async ({ params }: PageProps) => {
   // Todoが存在しない場合
   if (!todoData) return notFound();
 
-  // プロフィール取得
-  const { data: profileData } = await supabase
-    .from("profiles")
-    .select()
-    .eq("id", todoData.user_id)
-    .single();
-
   // 表示Todo詳細作成
   const todo: TodoListType = {
     id: todoData.id,
@@ -38,7 +31,8 @@ const TodoDetailPage = async ({ params }: PageProps) => {
     title: todoData.title,
     content: todoData.content,
     user_id: todoData.user_id,
-    name: profileData!.name,
+    status: todoData.status,
+    comment: todoData.comment,
   };
 
   return <TodoDetail todo={todo} />;
