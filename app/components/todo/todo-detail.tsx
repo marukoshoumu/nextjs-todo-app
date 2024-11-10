@@ -73,18 +73,14 @@ const TodoDetail = ({ todo }: PageProps) => {
       <div className="mb-5">
         <div className="text-center font-bold text-3xl mb-5">{todo.title}</div>
         <div className="leading-relaxed break-words whitespace-pre-wrap mb-5">
-          {todo.content}
+          内容：{todo.content}
         </div>
-        <div className="text-sm text-gray-500 mb-2">
-          ステータス: <span className="font-semibold">{todo.status}</span>
+        <div className="leading-relaxed break-words whitespace-pre-wrap mb-5">
+          ステータス：<span className="font-semibold">{todo.status}</span>
         </div>
-        {todo.comment && (
-          <div className="bg-gray-100 p-3 rounded">
-            <div className="leading-relaxed break-words whitespace-pre-wrap">
-              {todo.comment}
-            </div>
-          </div>
-        )}
+        <div className="leading-relaxed break-words whitespace-pre-wrap mb-5">
+          コメント：{todo.comment!}
+        </div>
       </div>
 
       {renderButton()}

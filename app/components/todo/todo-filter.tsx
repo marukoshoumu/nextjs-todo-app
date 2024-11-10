@@ -19,7 +19,7 @@ const TodoFilter = ({ status, setStatus }: TodoFilterProps) => {
       >
         <option value="all">すべて</option>
         <option value="未着手">未着手</option>
-        <option value="着手中">着手中</option>
+        <option value="途中">途中</option>
         <option value="完了">完了</option>
       </select>
     </div>
