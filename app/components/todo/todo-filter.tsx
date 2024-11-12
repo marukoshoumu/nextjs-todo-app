@@ -7,7 +7,7 @@ type TodoFilterProps = {
 
 const TodoFilter = ({ status, setStatus }: TodoFilterProps) => {
   return (
-    <div className="mb-5">
+    <>
       <label htmlFor="status-filter" className="mr-2">
         ステータスで絞り込み:
       </label>
@@ -22,7 +22,7 @@ const TodoFilter = ({ status, setStatus }: TodoFilterProps) => {
         <option value="途中">途中</option>
         <option value="完了">完了</option>
       </select>
-    </div>
+    </>
   );
 };
 

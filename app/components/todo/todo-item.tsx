@@ -16,14 +16,24 @@ const TodoItem = (todo: TodoListType) => {
   }
 
   return (
-    <div className="break-words">
+    <div className="p-4 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200 cursor-pointer">
       <Link href={`todo/${todo.id}`}>
-        <div className="text-gray-500 text-sm">
-          作成日：{format(new Date(todo.created_at), "yyyy/MM/dd HH:mm")}
+        <div className="text-sm text-gray-500">
+          作成日時：{format(new Date(todo.created_at), "yyyy/MM/dd HH:mm")}
         </div>
-        <div className="font-bold text-xl">{todo.title}</div>
-        <div className="mb-3 text-gray-500">{content}</div>
-        <div className="mb-3 text-gray-500">ステータス：{todo.status}</div>
+        <div className="text-xl font-semibold text-blue-600">{todo.title}</div>
+        <div className="text-gray-600 mt-2">{content}</div>
+        <div className="flex justify-between items-center mt-4">
+          <span
+            className={`px-3 py-1 rounded-full text-xs font-semibold ${
+              todo.status === "完了"
+                ? "bg-green-100 text-green-600"
+                : "bg-yellow-100 text-yellow-600"
+            }`}
+          >
+            {todo.status}
+          </span>
+        </div>
       </Link>
     </div>
   );

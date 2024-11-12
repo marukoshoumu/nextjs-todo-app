@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { format } from "date-fns";
 import { useRouter } from "next/navigation";
 import { useSupabase } from "../supabase-provider";
@@ -16,8 +16,6 @@ type PageProps = {
 const TodoDetail = ({ todo }: PageProps) => {
   const { supabase } = useSupabase();
   const router = useRouter();
-  const { user } = useStore();
-  const [myTodo, setMyTodo] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const deleteTodo = async () => {
@@ -37,53 +35,57 @@ const TodoDetail = ({ todo }: PageProps) => {
     setLoading(false);
   };
 
-  const renderButton = () => {
-    if (myTodo) {
-      return (
-        <div className="flex justify-end">
-          {loading ? (
-            <Loading />
-          ) : (
-            <div className="flex items-center space-x-5">
-              <Link href={`/todo/${todo.id}/edit`}>編集</Link>
-              <div className="cursor-pointer" onClick={() => deleteTodo()}>
-                削除
-              </div>
-            </div>
-          )}
-        </div>
-      );
-    }
-  };
-
-  useEffect(() => {
-    if (user.id === todo.user_id) {
-      setMyTodo(true);
-    }
-  }, [user]);
-
   return (
-    <div className="max-w-screen-md mx-auto">
-      <div className="flex flex-col items-center justify-center mb-5">
-        <div className="text-sm text-gray-500">
-          作成日：{format(new Date(todo.created_at), "yyyy/MM/dd HH:mm")}
-        </div>
+    <div className="p-6 max-w-2xl mx-auto bg-white rounded-lg shadow-lg mt-8">
+      <h1 className="text-4xl font-bold text-blue-600 mb-4">{todo.title}</h1>
+      <div className="text-sm text-gray-500 mb-4">
+        作成日：{format(new Date(todo.created_at), "yyyy/MM/dd HH:mm")}
       </div>
 
-      <div className="mb-5">
-        <div className="text-center font-bold text-3xl mb-5">{todo.title}</div>
-        <div className="leading-relaxed break-words whitespace-pre-wrap mb-5">
-          内容：{todo.content}
-        </div>
-        <div className="leading-relaxed break-words whitespace-pre-wrap mb-5">
-          ステータス：<span className="font-semibold">{todo.status}</span>
-        </div>
-        <div className="leading-relaxed break-words whitespace-pre-wrap mb-5">
-          コメント：{todo.comment!}
-        </div>
+      <div className="mb-6">
+        <h2 className="text-lg font-semibold text-gray-700">内容</h2>
+        <p className="text-gray-600 mt-2">{todo.content}</p>
       </div>
 
-      {renderButton()}
+      {todo.comment && (
+        <div className="mb-6">
+          <h2 className="text-lg font-semibold text-gray-700">コメント</h2>
+          <p className="text-gray-600 mt-2">{todo.comment}</p>
+        </div>
+      )}
+
+      <div className="mt-4">
+        <span
+          className={`inline-block px-4 py-2 rounded-full text-xs font-semibold ${
+            todo.status === "完了"
+              ? "bg-green-100 text-green-600"
+              : "bg-yellow-100 text-yellow-600"
+          }`}
+        >
+          {todo.status}
+        </span>
+      </div>
+
+      <div className="flex justify-end">
+        {loading ? (
+          <Loading />
+        ) : (
+          <div className="flex items-center space-x-5">
+            <Link
+              href={`/todo/${todo.id}/edit`}
+              className="px-4 py-2 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600 transition duration-200"
+            >
+              編集
+            </Link>
+            <div
+              className="px-4 py-2 bg-red-500 text-white font-semibold rounded-md hover:bg-red-600 transition duration-200"
+              onClick={() => deleteTodo()}
+            >
+              削除
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 };
