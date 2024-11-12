@@ -3,9 +3,9 @@
 import { useRouter } from "next/navigation";
 import { useSupabase } from "../supabase-provider";
 import useStore from "../../../store";
-import TodoForm from "./todo-form";
+import { TodoForm } from "../organisms/TodoForm";
 
-const TodoNew = () => {
+const TodoNewPage = () => {
   const { supabase } = useSupabase();
   const router = useRouter();
   const { user } = useStore();
@@ -49,4 +49,4 @@ const TodoNew = () => {
   );
 };
 
-export default TodoNew;
+export default TodoNewPage;

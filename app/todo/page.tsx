@@ -2,11 +2,9 @@
 
 import { Suspense } from "react";
 import Loading from "../loading";
-import TodoNewButton from "../components/todo/todo-new-button";
-import TodoList from "../components/todo/todo-list";
-import { fetchTodos } from "@/utils/supabase-server";
 import useStore from "../../store";
 import { useSupabase } from "../components/supabase-provider";
+import TodoListPage from "../components/pages/TodoListPage";
 
 // メインページ
 const TodoPage = async () => {
@@ -25,10 +23,9 @@ const TodoPage = async () => {
 
   return (
     <div className="h-full">
-      <TodoNewButton />
       <Suspense fallback={<Loading />}>
         {/* @ts-ignore*/}
-        <TodoList todos={todos} />
+        <TodoListPage todos={todos} />
       </Suspense>
     </div>
   );

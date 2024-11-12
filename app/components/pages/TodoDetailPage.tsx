@@ -1,19 +1,19 @@
 "use client";
 
-import { useState } from "react";
-import { format } from "date-fns";
+import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useSupabase } from "../supabase-provider";
-import Link from "next/link";
-import useStore from "../../../store";
+import { format } from "date-fns";
+import { Button } from "../../components/atoms/Button";
+import { TodoStatus } from "../../components/molecules/TodoStatus";
 import Loading from "../../loading";
-
 import type { TodoListType } from "../../../utils/todo.types";
-type PageProps = {
+
+type TodoDetailPageProps = {
   todo: TodoListType;
 };
 
-const TodoDetail = ({ todo }: PageProps) => {
+const TodoDetailPage: React.FC<TodoDetailPageProps> = ({ todo }) => {
   const { supabase } = useSupabase();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
@@ -47,42 +47,32 @@ const TodoDetail = ({ todo }: PageProps) => {
         <p className="text-gray-600 mt-2">{todo.content}</p>
       </div>
 
-      {todo.comment && (
-        <div className="mb-6">
-          <h2 className="text-lg font-semibold text-gray-700">コメント</h2>
-          <p className="text-gray-600 mt-2">{todo.comment}</p>
-        </div>
-      )}
-
-      <div className="mt-4">
-        <span
-          className={`inline-block px-4 py-2 rounded-full text-xs font-semibold ${
-            todo.status === "完了"
-              ? "bg-green-100 text-green-600"
-              : "bg-yellow-100 text-yellow-600"
-          }`}
-        >
-          {todo.status}
-        </span>
+      <div className="mb-6">
+        <h2 className="text-lg font-semibold text-gray-700">コメント</h2>
+        <p className="text-gray-600 mt-2">{todo.comment}</p>
       </div>
 
-      <div className="flex justify-end">
+      <div className="mt-4">
+        <TodoStatus status={todo.status!} />
+      </div>
+
+      <div className="flex justify-end mt-6">
         {loading ? (
           <Loading />
         ) : (
           <div className="flex items-center space-x-5">
-            <Link
+            <Button
               href={`/todo/${todo.id}/edit`}
-              className="px-4 py-2 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600 transition duration-200"
+              className="bg-blue-500 text-white hover:bg-blue-600"
             >
               編集
-            </Link>
-            <div
-              className="px-4 py-2 bg-red-500 text-white font-semibold rounded-md hover:bg-red-600 transition duration-200"
-              onClick={() => deleteTodo()}
+            </Button>
+            <Button
+              onClick={deleteTodo}
+              className="bg-red-500 text-white hover:bg-red-600"
             >
               削除
-            </div>
+            </Button>
           </div>
         )}
       </div>
@@ -90,4 +80,4 @@ const TodoDetail = ({ todo }: PageProps) => {
   );
 };
 
-export default TodoDetail;
+export default TodoDetailPage;

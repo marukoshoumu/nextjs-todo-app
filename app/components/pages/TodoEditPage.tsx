@@ -1,18 +1,17 @@
 "use client";
 
-import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useSupabase } from "../supabase-provider";
 import type { Database } from "../../../utils/database.types";
 import useStore from "../../../store";
-import TodoForm from "./todo-form";
+import { TodoForm } from "../organisms/TodoForm";
 
 type Todo = Database["public"]["Tables"]["todos"]["Row"];
 type PageProps = {
   todo: Todo;
 };
 
-const TodoEdit = ({ todo }: PageProps) => {
+const TodoEditPage = ({ todo }: PageProps) => {
   const { supabase } = useSupabase();
   const router = useRouter();
   const { user } = useStore();
@@ -59,4 +58,4 @@ const TodoEdit = ({ todo }: PageProps) => {
   );
 };
 
-export default TodoEdit;
+export default TodoEditPage;

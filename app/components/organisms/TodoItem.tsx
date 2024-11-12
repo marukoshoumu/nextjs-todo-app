@@ -1,16 +1,13 @@
-"use client";
-
+import React from "react";
 import { format } from "date-fns";
+import Link from "next/link";
+import { TodoStatus } from "../molecules/TodoStatus";
 import type { TodoListType } from "../../../utils/todo.types";
 
-import Link from "next/link";
-
-// ブログアイテム
-const TodoItem = (todo: TodoListType) => {
+export const TodoItem: React.FC<TodoListType> = (todo) => {
   const MAX_LENGTH = 55;
   let content = todo.content.replace(/\r?\n/g, "");
 
-  // 文字数制限
   if (content.length > MAX_LENGTH) {
     content = content.substring(0, MAX_LENGTH) + "...";
   }
@@ -24,19 +21,9 @@ const TodoItem = (todo: TodoListType) => {
         <div className="text-xl font-semibold text-blue-600">{todo.title}</div>
         <div className="text-gray-600 mt-2">{content}</div>
         <div className="flex justify-between items-center mt-4">
-          <span
-            className={`px-3 py-1 rounded-full text-xs font-semibold ${
-              todo.status === "完了"
-                ? "bg-green-100 text-green-600"
-                : "bg-yellow-100 text-yellow-600"
-            }`}
-          >
-            {todo.status}
-          </span>
+          <TodoStatus status={todo.status!} />
         </div>
       </Link>
     </div>
   );
 };
-
-export default TodoItem;

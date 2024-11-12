@@ -1,8 +1,7 @@
 import { notFound } from "next/navigation";
 import { createClient } from "../../../utils/supabase-server";
+import TodoDetail from "../../components/pages/TodoDetailPage";
 import type { TodoListType } from "../../../utils/todo.types";
-
-import TodoDetail from "../../components/todo/todo-detail";
 
 type PageProps = {
   params: {

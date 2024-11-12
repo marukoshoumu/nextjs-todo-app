@@ -1,4 +1,4 @@
-import TodoNew from "../../components/todo/todo-new";
+import TodoNew from "../../components/pages/TodoNewPage";
 
 // TODO作成ページ
 const TodoNewPage = () => {
