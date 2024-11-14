@@ -21,10 +21,11 @@ const TodoDetailPage: React.FC<TodoDetailPageProps> = ({ todo }) => {
   const deleteTodo = async () => {
     setLoading(true);
 
-    const { error } = await supabase.from("todos").delete().eq("id", todo.id);
+    const response = await fetch(`/api/todo/${todo.id}`, { method: "DELETE" });
 
-    if (error) {
-      alert(error.message);
+    if (!response.ok) {
+      const errorData = await response.json();
+      alert(errorData.error || "削除に失敗しました。");
       setLoading(false);
       return;
     }

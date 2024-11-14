@@ -11,14 +11,22 @@ type PageProps = {
 
 // Todo詳細
 const TodoDetailPage = async ({ params }: PageProps) => {
-  const supabase = createClient();
+  const response = await fetch(`/api/todo/${params.todoId}`, { method: "GET" });
 
-  // Todo詳細取得
-  const { data: todoData } = await supabase
-    .from("todos")
-    .select("*")
-    .eq("id", params.todoId)
-    .single();
+  if (!response.ok) {
+    const errorData = await response.json();
+    alert(errorData.error || "取得に失敗しました。");
+    return;
+  }
+  const todoData = await response.json();
+  // const supabase = createClient();
+
+  // // Todo詳細取得
+  // const { data: todoData } = await supabase
+  //   .from("todos")
+  //   .select("*")
+  //   .eq("id", params.todoId)
+  //   .single();
 
   // Todoが存在しない場合
   if (!todoData) return notFound();

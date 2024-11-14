@@ -11,14 +11,23 @@ type PageProps = {
 
 // TODO編集ページ
 const TodoEditPage = async ({ params }: PageProps) => {
-  const supabase = createClient();
+  const response = await fetch(`/api/todo/${params.todoId}`, { method: "GET" });
 
-  // TODO詳細取得
-  const { data: todo } = await supabase
-    .from("todos")
-    .select()
-    .eq("id", params.todoId)
-    .single();
+  if (!response.ok) {
+    const errorData = await response.json();
+    alert(errorData.error || "取得に失敗しました。");
+    return;
+  }
+  const todo = await response.json();
+
+  // const supabase = createClient();
+
+  // // TODO詳細取得
+  // const { data: todo } = await supabase
+  //   .from("todos")
+  //   .select()
+  //   .eq("id", params.todoId)
+  //   .single();
 
   // TODOが存在しない場合
   if (!todo) return notFound();

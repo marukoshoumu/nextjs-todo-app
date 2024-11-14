@@ -17,16 +17,22 @@ const TodoNewPage = () => {
     comment: string
   ) => {
     if (user.id) {
-      const { error: insertError } = await supabase.from("todos").insert({
+      const insertTodo = {
         title: title,
         content: content,
         status: status,
         comment: comment,
         user_id: user.id,
+      };
+      const response = await fetch(`/api/todo`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(insertTodo),
       });
 
-      if (insertError) {
-        alert(insertError.message);
+      if (!response.ok) {
+        const errorData = await response.json();
+        alert(errorData.error || "登録に失敗しました。");
         return;
       }
 

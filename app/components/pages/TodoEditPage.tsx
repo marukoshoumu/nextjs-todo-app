@@ -23,21 +23,23 @@ const TodoEditPage = ({ todo }: PageProps) => {
     comment: string
   ) => {
     if (user.id) {
-      const { error: updateError } = await supabase
-        .from("todos")
-        .update({
-          title,
-          content,
-          status,
-          comment,
-        })
-        .eq("id", todo.id);
+      const updatedTodo = {
+        title: title,
+        content: content,
+        status: status,
+        comment: comment,
+      };
+      const response = await fetch(`/api/todo/${todo.id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(updatedTodo),
+      });
 
-      if (updateError) {
-        alert(updateError.message);
+      if (!response.ok) {
+        const errorData = await response.json();
+        alert(errorData.error || "更新に失敗しました。");
         return;
       }
-
       router.push(`/todo`);
       router.refresh();
     }
