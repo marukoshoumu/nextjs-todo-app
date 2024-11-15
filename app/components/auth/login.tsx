@@ -2,14 +2,13 @@
 
 import { useRef, FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
-import { useSupabase } from "../supabase-provider";
 
 import Link from "next/link";
 import Loading from "../../loading";
+import { createClient } from "@/utils/supabase-client";
 
 // ログイン
 const Login = () => {
-  const { supabase } = useSupabase();
   const router = useRouter();
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
@@ -22,10 +21,12 @@ const Login = () => {
 
     // ログイン処理
     // 認証はクライアントコンポーネントで行う
-    const { error: signinError } = await supabase.auth.signInWithPassword({
-      email: emailRef.current!.value,
-      password: passwordRef.current!.value,
-    });
+    const { error: signinError } = await createClient().auth.signInWithPassword(
+      {
+        email: emailRef.current!.value,
+        password: passwordRef.current!.value,
+      }
+    );
 
     if (signinError) {
       alert(signinError.message);

@@ -1,30 +1,40 @@
-"use client";
-
 import { Suspense } from "react";
 import Loading from "../loading";
-import useStore from "../../store";
-import { useSupabase } from "../components/supabase-provider";
 import TodoListPage from "../components/pages/TodoListPage";
+import { createClient } from "@/utils/supabase-server";
+
+export const dynamic = "force-dynamic";
 
 // メインページ
 const TodoPage = async () => {
-  const { user } = useStore();
-  const getTodo = {
-    id: user.id,
-  };
-  const response = await fetch(`/api/todo?userId=${user.id}`);
+  const { data, error } = await createClient().auth.getSession();
+  if (error) {
+    console.error(error.message);
+    return null;
+  }
 
-  if (!response.ok) {
-    const errorData = await response.json();
-    alert(errorData.error || "取得に失敗しました。");
+  const { session } = data;
+  console.log("session", session);
+  let todos = [];
+  try {
+    const response = await fetch(
+      `http://localhost:3000/api/todo?userId=${session?.user.id}`
+    );
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      console.error(errorData.error);
+      return;
+    }
+    todos = await response.json();
+  } catch (error) {
+    console.error(error);
     return;
   }
-  const todos = await response.json();
 
   return (
     <div className="h-full">
       <Suspense fallback={<Loading />}>
-        {/* @ts-ignore*/}
         <TodoListPage todos={todos} />
       </Suspense>
     </div>

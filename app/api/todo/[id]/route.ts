@@ -3,13 +3,13 @@ import { createClient } from "@/utils/supabase-server";
 
 export async function GET(
   req: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   const supabase = createClient();
   const { data, error } = await supabase
     .from("todos")
     .select("*")
-    .eq("id", params.id)
+    .eq("id", (await params).id)
     .single();
 
   if (error)
@@ -20,14 +20,14 @@ export async function GET(
 
 export async function PATCH(
   req: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   const supabase = createClient();
   const updates = await req.json();
   const { data, error } = await supabase
     .from("todos")
     .update(updates)
-    .eq("id", params.id)
+    .eq("id", (await params).id)
     .single();
 
   if (error)
@@ -38,10 +38,13 @@ export async function PATCH(
 
 export async function DELETE(
   req: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   const supabase = createClient();
-  const { error } = await supabase.from("todos").delete().eq("id", params.id);
+  const { error } = await supabase
+    .from("todos")
+    .delete()
+    .eq("id", (await params).id);
 
   if (error)
     return NextResponse.json({ error: error.message }, { status: 400 });

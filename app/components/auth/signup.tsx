@@ -2,14 +2,13 @@
 
 import { useRef, FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
-import { useSupabase } from "../supabase-provider";
 
 import Link from "next/link";
 import Loading from "../../loading";
+import supabase from "@/utils/supabase-main";
 
 // サインアップ
 const Singup = () => {
-  const { supabase } = useSupabase();
   const router = useRouter();
   const nameRef = useRef<HTMLInputElement>(null);
   const emailRef = useRef<HTMLInputElement>(null);
@@ -22,7 +21,7 @@ const Singup = () => {
     setLoading(true);
 
     // supabaseサインアップ
-    const { error: signupError } = await supabase.auth.signUp({
+    const { data, error: signupError } = await supabase.auth.signUp({
       email: emailRef.current!.value,
       password: passwordRef.current!.value,
     });

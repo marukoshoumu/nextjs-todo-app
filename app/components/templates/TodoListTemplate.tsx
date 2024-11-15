@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState, useEffect } from "react";
 import { TodoItem } from "../organisms/TodoItem";
 import { Select } from "../atoms/Select";

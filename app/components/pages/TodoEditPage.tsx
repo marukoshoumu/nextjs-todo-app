@@ -1,7 +1,6 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useSupabase } from "../supabase-provider";
 import type { Database } from "../../../utils/database.types";
 import useStore from "../../../store";
 import { TodoForm } from "../organisms/TodoForm";
@@ -12,7 +11,6 @@ type PageProps = {
 };
 
 const TodoEditPage = ({ todo }: PageProps) => {
-  const { supabase } = useSupabase();
   const router = useRouter();
   const { user } = useStore();
 

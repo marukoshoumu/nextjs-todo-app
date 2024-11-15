@@ -1,12 +1,10 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useSupabase } from "../supabase-provider";
 import useStore from "../../../store";
 import { TodoForm } from "../organisms/TodoForm";
 
 const TodoNewPage = () => {
-  const { supabase } = useSupabase();
   const router = useRouter();
   const { user } = useStore();
 

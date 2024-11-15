@@ -1,17 +1,17 @@
 import { notFound } from "next/navigation";
-import { createClient } from "../../../../utils/supabase-server";
-
 import TodoEdit from "../../../components/pages/TodoEditPage";
 
 type PageProps = {
-  params: {
+  params: Promise<{
     todoId: string;
-  };
+  }>;
 };
 
 // TODO編集ページ
 const TodoEditPage = async ({ params }: PageProps) => {
-  const response = await fetch(`/api/todo/${params.todoId}`, { method: "GET" });
+  const response = await fetch(`/api/todo/${(await params).todoId}`, {
+    method: "GET",
+  });
 
   if (!response.ok) {
     const errorData = await response.json();
@@ -19,15 +19,6 @@ const TodoEditPage = async ({ params }: PageProps) => {
     return;
   }
   const todo = await response.json();
-
-  // const supabase = createClient();
-
-  // // TODO詳細取得
-  // const { data: todo } = await supabase
-  //   .from("todos")
-  //   .select()
-  //   .eq("id", params.todoId)
-  //   .single();
 
   // TODOが存在しない場合
   if (!todo) return notFound();

@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import { TodoListTemplate } from "../../components/templates/TodoListTemplate";
 import type { TodoListType } from "../../../utils/todo.types";
