@@ -2,6 +2,7 @@ import { Suspense } from "react";
 import Loading from "../loading";
 import TodoListPage from "../components/pages/TodoListPage";
 import { createClient } from "@/utils/supabase-server";
+import { headers } from "next/headers";
 
 export const dynamic = "force-dynamic";
 
@@ -17,8 +18,12 @@ const TodoPage = async () => {
   console.log("session", session);
   let todos = [];
   try {
+    const headersData = headers();
+    const protocol = headersData.get("x-forwarded-proto") || "http";
+    const host = headersData.get("host");
+    const apiBase = `${protocol}://${host}`;
     const response = await fetch(
-      `http://localhost:3000/api/todo?userId=${session?.user.id}`
+      `${apiBase}/api/todo?userId=${session?.user.id}`
     );
 
     if (!response.ok) {
