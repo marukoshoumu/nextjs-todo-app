@@ -36,13 +36,9 @@ const TodoListPage: React.FC<TodoListPageProps> = ({ todos }) => {
   // 作成日時のソート制御
   useEffect(() => {
     setFilteredTodos(
-      sort === "Asc"
-        ? filteredTodos.sort((a: TodoListType, b: TodoListType) =>
-            timeSort(a.created_at, b.created_at, true)
-          )
-        : filteredTodos.sort((a: TodoListType, b: TodoListType) =>
-            timeSort(a.created_at, b.created_at, false)
-          )
+      filteredTodos.sort((a: TodoListType, b: TodoListType) =>
+        timeSort(a.created_at, b.created_at, sort === "Asc")
+      )
     );
   }, [sort, filteredTodos]);
 
