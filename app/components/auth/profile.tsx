@@ -124,8 +124,8 @@ const Profile = () => {
         return;
       }
 
-      // トップページ遷移
-      router.push("/");
+      // TODO一覧ページ遷移
+      router.push("/todo");
       router.refresh();
     }
 
