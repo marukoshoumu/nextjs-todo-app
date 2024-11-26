@@ -7,6 +7,7 @@ import { Button } from "../../components/atoms/Button";
 import { TodoStatus } from "../../components/molecules/TodoStatus";
 import Loading from "../../loading";
 import type { TodoListType } from "../../../utils/todo.types";
+import Link from "next/link";
 
 type TodoDetailPageProps = {
   todo: TodoListType;
@@ -75,12 +76,12 @@ const TodoDetailPage: React.FC<TodoDetailPageProps> = ({ todo }) => {
           <Loading />
         ) : (
           <div className="flex items-center space-x-5">
-            <Button
+            <Link
               href={`/todo/${todo.id}/edit`}
-              className="bg-blue-500 text-white hover:bg-blue-600"
+              className="px-4 py-2 font-semibold rounded-md transition duration-200 bg-blue-500 text-white hover:bg-blue-600"
             >
               編集
-            </Button>
+            </Link>
             <Button
               onClick={deleteTodo}
               className="bg-red-500 text-white hover:bg-red-600"

@@ -76,7 +76,7 @@ const TodoListPage: React.FC<TodoListPageProps> = ({ todos }) => {
         <div>
           <Link
             href={"/todo/new"}
-            className="bg-yellow-500 text-white hover:bg-yellow-600"
+            className="px-4 py-2 font-semibold rounded-md transition duration-200 bg-yellow-500 text-white hover:bg-yellow-600"
           >
             TODO作成
           </Link>
