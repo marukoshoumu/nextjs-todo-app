@@ -9,15 +9,23 @@ type PageProps = {
   }>;
 };
 
-// Todo詳細
+/**
+ * Todo詳細ページ
+ * @param {PageProps}params todoId
+ * @returns
+ */
 const TodoDetailPage = async ({ params }: PageProps) => {
+  // ホストとプロトコルを取得
   const headersData = headers();
   const protocol = headersData.get("x-forwarded-proto") || "http";
   const host = headersData.get("host");
+  // 絶対パス
   const apiBase = `${protocol}://${host}`;
+  // Todo単一行検索
   const response = await fetch(`${apiBase}/api/todo/${(await params).todoId}`, {
     method: "GET",
   });
+  // レスポンスチェック
   if (!response.ok) {
     const errorData = await response.json();
     alert(errorData.error || "取得に失敗しました。");

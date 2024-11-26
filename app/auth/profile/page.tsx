@@ -1,8 +1,11 @@
-import Profile from '../../components/auth/profile'
+import Profile from "../../components/auth/profile";
 
-// プロフィールページ
+/**
+ * プロフィールページ
+ * @returns
+ */
 const ProfilePage = () => {
-  return <Profile />
-}
+  return <Profile />;
+};
 
-export default ProfilePage
+export default ProfilePage;

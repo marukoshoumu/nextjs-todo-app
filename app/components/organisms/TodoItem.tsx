@@ -1,13 +1,18 @@
-import React from "react";
 import { format } from "date-fns";
 import Link from "next/link";
 import { TodoStatus } from "../molecules/TodoStatus";
 import type { TodoListType } from "../../../utils/todo.types";
 
+/**
+ * Todoの各一覧アイテム
+ * @param {TodoListType}todo
+ * @returns
+ */
 export const TodoItem: React.FC<TodoListType> = (todo) => {
   const MAX_LENGTH = 55;
   let content = todo.content.replace(/\r?\n/g, "");
 
+  // 内容が55文字を超えたらそれ以降の文字は表示しない
   if (content.length > MAX_LENGTH) {
     content = content.substring(0, MAX_LENGTH) + "...";
   }

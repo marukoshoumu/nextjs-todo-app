@@ -5,7 +5,11 @@ import { useRouter } from "next/navigation";
 import useStore from "../../store";
 import { createClient } from "@/utils/supabase-client";
 
-// ユーザーがログインまたはログアウトするたびに新しいセッションを取得する
+/**
+ * ユーザーがログインまたはログアウトするたびに新しいセッションを取得する
+ * @param {string}serverAccessToken
+ * @returns
+ */
 const SupabaseListener = ({
   serverAccessToken,
 }: {

@@ -1,6 +1,9 @@
 import Login from "./components/auth/login";
 
-// メインページ
+/**
+ * メインページ
+ * @returns
+ */
 const Page = async () => {
   return <Login />;
 };

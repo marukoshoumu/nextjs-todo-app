@@ -1,6 +1,9 @@
 import TodoNew from "../../components/pages/TodoNewPage";
 
-// TODO作成ページ
+/**
+ * TODO作成ページ
+ * @returns
+ */
 const TodoNewPage = () => {
   return <TodoNew />;
 };

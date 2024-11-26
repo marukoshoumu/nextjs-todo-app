@@ -11,7 +11,11 @@ import HeadItem from "next/head";
 // キャッシュをしない
 export const revalidate = 0;
 
-// レイアウト
+/**
+ * レイアウト
+ * @param
+ * @returns
+ */
 const RootLayout = async ({ children }: { children: React.ReactNode }) => {
   const supabase = createClient();
 

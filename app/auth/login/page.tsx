@@ -1,8 +1,11 @@
-import Login from '../../components/auth/login'
+import Login from "../../components/auth/login";
 
-// ログインページ
+/**
+ * ログインページ
+ * @returns
+ */
 const LoginPage = () => {
-  return <Login />
-}
+  return <Login />;
+};
 
-export default LoginPage
+export default LoginPage;

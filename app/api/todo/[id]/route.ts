@@ -1,8 +1,14 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/utils/supabase-server";
 
+/**
+ * TODO単一行検索
+ * @param {NextRequest}req
+ * @param {string}id
+ * @returns パラメータのIDに紐づくTODOテーブルデータ
+ */
 export async function GET(
-  req: Request,
+  req: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
   const supabase = createClient();
@@ -18,8 +24,14 @@ export async function GET(
   return NextResponse.json(data);
 }
 
+/**
+ * TODO更新
+ * @param {NextRequest}req
+ * @param {string}id
+ * @returns 更新したTODOデータ
+ */
 export async function PATCH(
-  req: Request,
+  req: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
   const supabase = createClient();
@@ -36,8 +48,14 @@ export async function PATCH(
   return NextResponse.json(data);
 }
 
+/**
+ * TODO削除
+ * @param {NextRequest}req
+ * @param {string}id
+ * @returns 削除処理時のメッセージ
+ */
 export async function DELETE(
-  req: Request,
+  req: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
   const supabase = createClient();

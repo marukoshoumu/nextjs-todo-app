@@ -1,6 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/utils/supabase-server";
 
+/**
+ * TODOユーザーID検索
+ * @param {NextRequest}req
+ * @returns ログインユーザーに紐づくTODOテーブルデータ
+ */
 export async function GET(req: NextRequest) {
   const supabase = createClient();
   const { searchParams } = new URL(req.url);
@@ -17,7 +22,12 @@ export async function GET(req: NextRequest) {
   return NextResponse.json(todos);
 }
 
-export async function POST(req: Request) {
+/**
+ * TODO登録
+ * @param {NextRequest}req
+ * @returns 登録時のメッセージ
+ */
+export async function POST(req: NextRequest) {
   const supabase = createClient();
   const inserts = await req.json();
   const { error } = await supabase.from("todos").insert(inserts);

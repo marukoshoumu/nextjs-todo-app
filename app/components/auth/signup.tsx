@@ -7,7 +7,10 @@ import Link from "next/link";
 import Loading from "../../loading";
 import supabase from "@/utils/supabase-main";
 
-// サインアップ
+/**
+ * サインアップ
+ * @returns
+ */
 const Singup = () => {
   const router = useRouter();
   const nameRef = useRef<HTMLInputElement>(null);
@@ -44,7 +47,7 @@ const Singup = () => {
       return;
     }
 
-    // トップページに遷移
+    // TODO一覧ページに遷移
     router.push("/todo");
 
     setLoading(false);
@@ -53,6 +56,7 @@ const Singup = () => {
   return (
     <div className="max-w-sm mx-auto">
       <form onSubmit={onSubmit}>
+        {/** 名前 */}
         <div className="mb-5">
           <div className="text-sm mb-1">名前</div>
           <input
@@ -65,6 +69,7 @@ const Singup = () => {
           />
         </div>
 
+        {/** メールアドレス */}
         <div className="mb-5">
           <div className="text-sm mb-1">メールアドレス</div>
           <input
@@ -77,6 +82,7 @@ const Singup = () => {
           />
         </div>
 
+        {/** パスワード */}
         <div className="mb-5">
           <div className="text-sm mb-1">パスワード</div>
           <input
@@ -89,6 +95,7 @@ const Singup = () => {
           />
         </div>
 
+        {/** サインアップ */}
         <div className="text-center mb-5">
           {loading ? (
             <Loading />
@@ -103,6 +110,7 @@ const Singup = () => {
         </div>
       </form>
 
+      {/** ログイン */}
       <div className="text-center">アカウントをお持ちですか？</div>
       <div className="text-center">
         <Link href="/auth/login" className="cursor-pointer font-bold">

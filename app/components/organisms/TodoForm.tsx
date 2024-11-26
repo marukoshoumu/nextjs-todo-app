@@ -1,58 +1,90 @@
-import React, { FormEvent, useState } from 'react'
-import { FormField } from '../molecules/FormField'
-import { Select } from '../atoms/Select'
-import { Button } from '../atoms/Button'
-import Loading from '@/app/loading'
+import { FormEvent, useState } from "react";
+import { FormField } from "../molecules/FormField";
+import { Select } from "../atoms/Select";
+import { Button } from "../atoms/Button";
+import Loading from "@/app/loading";
 
 interface TodoFormProps {
-  buttonName: string
-  onSubmit: (title: string, content: string, status: string, comment: string) => Promise<void>
-  initialData: {
-    title: string
-    content: string
-    status: string
+  buttonName: string;
+  onSubmit: (
+    title: string,
+    content: string,
+    status: string,
     comment: string
-  }
+  ) => Promise<void>;
+  initialData: {
+    title: string;
+    content: string;
+    status: string;
+    comment: string;
+  };
 }
 
-export const TodoForm: React.FC<TodoFormProps> = ({ buttonName, onSubmit, initialData }) => {
-  const [title, setTitle] = useState(initialData.title || "")
-  const [content, setContent] = useState(initialData.content || "")
-  const [status, setStatus] = useState(initialData.status || "未着手")
-  const [comment, setComment] = useState(initialData.comment || "")
-  const [titleError, setTitleError] = useState("")
-  const [contentError, setContentError] = useState("")
-  const [commentError, setCommentError] = useState("")
-  const [loading, setLoading] = useState(false)
+/**
+ * TODO入力フォーム
+ * @param {string}buttonName
+ * @param {void}onSubmit
+ * @param {Object}initialData
+ * @returns
+ */
+export const TodoForm: React.FC<TodoFormProps> = ({
+  buttonName,
+  onSubmit,
+  initialData,
+}) => {
+  const [title, setTitle] = useState(initialData.title || "");
+  const [content, setContent] = useState(initialData.content || "");
+  const [status, setStatus] = useState(initialData.status || "未着手");
+  const [comment, setComment] = useState(initialData.comment || "");
+  const [titleError, setTitleError] = useState("");
+  const [contentError, setContentError] = useState("");
+  const [commentError, setCommentError] = useState("");
+  const [loading, setLoading] = useState(false);
 
+  // タイトル用バリデーション
   const handleTitleChange = (input: string) => {
-    setTitle(input)
-    setTitleError(input.length > 50 ? "タイトルは50文字以内で入力してください。" : "")
-  }
+    setTitle(input);
+    setTitleError(
+      input.length > 50 ? "タイトルは50文字以内で入力してください。" : ""
+    );
+  };
 
+  // 内容用バリデーション
   const handleContentChange = (input: string) => {
-    setContent(input)
-    setContentError(input.length > 100 ? "内容は100文字以内で入力してください。" : "")
-  }
+    setContent(input);
+    setContentError(
+      input.length > 100 ? "内容は100文字以内で入力してください。" : ""
+    );
+  };
 
+  // コメント用バリデーション
   const handleCommentChange = (input: string) => {
-    setComment(input)
-    setCommentError(input.length > 200 ? "コメントは200文字以内で入力してください。" : "")
-  }
+    setComment(input);
+    setCommentError(
+      input.length > 200 ? "コメントは200文字以内で入力してください。" : ""
+    );
+  };
 
+  // ボタンクリック時の処理
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
+    e.preventDefault();
     if (!titleError && !contentError && !commentError) {
-      setLoading(true)
-      onSubmit(title, content, status, comment)
-      setLoading(false)
+      setLoading(true);
+      onSubmit(title, content, status, comment);
+      setLoading(false);
     }
-  }
+  };
 
   return (
-    <form onSubmit={handleSubmit} className="p-6 bg-white rounded-lg shadow-md max-w-md mx-auto">
-      <h2 className="text-2xl font-bold mb-4 text-gray-800">Todo {buttonName}</h2>
-
+    <form
+      onSubmit={handleSubmit}
+      className="p-6 bg-white rounded-lg shadow-md max-w-md mx-auto"
+    >
+      {/** 処理名 */}
+      <h2 className="text-2xl font-bold mb-4 text-gray-800">
+        Todo {buttonName}
+      </h2>
+      {/** タイトル */}
       <FormField
         label="タイトル"
         type="text"
@@ -64,6 +96,7 @@ export const TodoForm: React.FC<TodoFormProps> = ({ buttonName, onSubmit, initia
         required
       />
 
+      {/** 内容 */}
       <FormField
         label="内容"
         type="textarea"
@@ -75,8 +108,11 @@ export const TodoForm: React.FC<TodoFormProps> = ({ buttonName, onSubmit, initia
         required
       />
 
+      {/** ステータス */}
       <div className="mb-4">
-        <label className="block text-sm font-medium text-gray-600">ステータス</label>
+        <label className="block text-sm font-medium text-gray-600">
+          ステータス
+        </label>
         <Select
           value={status}
           onChange={setStatus}
@@ -88,6 +124,7 @@ export const TodoForm: React.FC<TodoFormProps> = ({ buttonName, onSubmit, initia
         />
       </div>
 
+      {/** コメント */}
       <FormField
         label="コメント"
         type="textarea"
@@ -98,6 +135,7 @@ export const TodoForm: React.FC<TodoFormProps> = ({ buttonName, onSubmit, initia
         error={commentError}
       />
 
+      {/** ボタン */}
       {loading ? (
         <Loading />
       ) : (
@@ -110,5 +148,5 @@ export const TodoForm: React.FC<TodoFormProps> = ({ buttonName, onSubmit, initia
         </Button>
       )}
     </form>
-  )
-}
+  );
+};

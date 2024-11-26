@@ -9,7 +9,10 @@ import useStore from "../../../store";
 import Image from "next/image";
 import Loading from "../../loading";
 
-// プロフィール
+/**
+ * プロフィール
+ * @returns
+ */
 const Profile = () => {
   const { supabase } = useSupabase();
   const router = useRouter();
@@ -34,6 +37,7 @@ const Profile = () => {
     []
   );
 
+  // プロフィールデータ制御
   useEffect(() => {
     if (user.id) {
       // プロフィール取得
@@ -140,6 +144,7 @@ const Profile = () => {
   return (
     <div className="max-w-sm mx-auto">
       <form onSubmit={onSubmit}>
+        {/** アバター画像 */}
         <div className="mb-5">
           <div className="flex justify-center mb-5">
             <Image
@@ -153,6 +158,7 @@ const Profile = () => {
           <input type="file" id="thumbnail" onChange={onUploadImage} />
         </div>
 
+        {/** 名前 */}
         <div className="mb-5">
           <div className="text-sm mb-1">名前</div>
           <input
@@ -165,11 +171,13 @@ const Profile = () => {
           />
         </div>
 
+        {/** メールアドレス */}
         <div className="mb-5">
           <div className="text-sm mb-1">メールアドレス</div>
           <div>{email}</div>
         </div>
 
+        {/** 変更ボタン */}
         <div className="text-center mb-10">
           {loading ? (
             <Loading />
@@ -184,6 +192,7 @@ const Profile = () => {
         </div>
       </form>
 
+      {/** ログアウト */}
       <div className="text-center">
         {loadingLogout ? (
           <Loading />

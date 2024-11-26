@@ -7,7 +7,10 @@ import Link from "next/link";
 import Loading from "../../loading";
 import { createClient } from "@/utils/supabase-client";
 
-// ログイン
+/**
+ * ログイン
+ * @returns
+ */
 const Login = () => {
   const router = useRouter();
   const emailRef = useRef<HTMLInputElement>(null);
@@ -34,7 +37,7 @@ const Login = () => {
       return;
     }
 
-    // トップページ遷移
+    // TODO一覧ページ遷移
     router.push("/todo");
 
     setLoading(false);
@@ -43,6 +46,7 @@ const Login = () => {
   return (
     <div className="max-w-sm mx-auto">
       <form onSubmit={onSubmit}>
+        {/** メールアドレス */}
         <div className="mb-5">
           <div className="text-sm mb-1">メールアドレス</div>
           <input
@@ -55,6 +59,7 @@ const Login = () => {
           />
         </div>
 
+        {/** パスワード */}
         <div className="mb-5">
           <div className="text-sm mb-1">パスワード</div>
           <input
@@ -67,6 +72,7 @@ const Login = () => {
           />
         </div>
 
+        {/** ログインボタン */}
         <div className="text-center mb-5">
           {loading ? (
             <Loading />
@@ -81,6 +87,7 @@ const Login = () => {
         </div>
       </form>
 
+      {/** サインアップ */}
       <div className="text-center">アカウントが未登録ですか？</div>
       <div className="text-center">
         <Link href="/auth/signup" className="cursor-pointer font-bold">

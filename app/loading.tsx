@@ -1,4 +1,7 @@
-// ローディング
+/**
+ * ローディング
+ * @returns
+ */
 const Loading = () => {
   return (
     <div className="flex justify-center">

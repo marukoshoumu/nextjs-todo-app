@@ -1,17 +1,28 @@
-import React from 'react'
-import { Input } from '../atoms/Input'
+import { Input } from "../atoms/Input";
 
 type FormFieldProps = {
-  label: string
-  type: string
-  value: string
-  onChange: (value: string) => void
-  placeholder?: string
-  maxLength?: number
-  error?: string
-  required?: boolean
-}
+  label: string;
+  type: string;
+  value: string;
+  onChange: (value: string) => void;
+  placeholder?: string;
+  maxLength?: number;
+  error?: string;
+  required?: boolean;
+};
 
+/**
+ * フォーム
+ * @param   {string}label
+ * @param   {string}type
+ * @param   {string}  value
+ * @param   {void}onChange
+ * @param   {string}placeholder
+ * @param   {number}maxLength
+ * @param   {string}error
+ * @param   {boolean}[required=false]
+ * @returns
+ */
 export const FormField: React.FC<FormFieldProps> = ({
   label,
   type,
@@ -31,10 +42,10 @@ export const FormField: React.FC<FormFieldProps> = ({
         onChange={onChange}
         placeholder={placeholder}
         maxLength={maxLength}
-        className={error ? 'border-red-500' : ''}
+        className={error ? "border-red-500" : ""}
         required={required}
       />
       {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
     </div>
-  )
-}
+  );
+};

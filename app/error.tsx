@@ -1,6 +1,9 @@
 "use client";
 
-// エラー画面
+/**
+ * エラー画面
+ * @returns
+ */
 const Error = () => {
   return (
     <div>

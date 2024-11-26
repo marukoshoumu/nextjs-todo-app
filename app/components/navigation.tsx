@@ -3,7 +3,11 @@
 import Link from "next/link";
 import useStore from "../../store";
 
-// ナビゲーション
+/**
+ * ナビゲーション\
+ * プロフィール または ログイン、サインアップの切り替え
+ * @returns
+ */
 const Navigation = () => {
   const { user } = useStore();
 

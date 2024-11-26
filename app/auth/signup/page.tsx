@@ -1,8 +1,11 @@
-import Signup from '../../components/auth/signup'
+import Signup from "../../components/auth/signup";
 
-// サインアップページ
+/**
+ * サインアップページ
+ * @returns
+ */
 const SignUpPage = () => {
-  return <Signup />
-}
+  return <Signup />;
+};
 
-export default SignUpPage
+export default SignUpPage;

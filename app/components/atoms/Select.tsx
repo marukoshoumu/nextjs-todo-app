@@ -1,13 +1,24 @@
-import React from 'react'
-
 type SelectProps = {
-  value: string
-  onChange: (value: string) => void
-  options: { value: string; label: string }[]
-  className?: string
-}
+  value: string;
+  onChange: (value: string) => void;
+  options: { value: string; label: string }[];
+  className?: string;
+};
 
-export const Select: React.FC<SelectProps> = ({ value, onChange, options, className = '' }) => {
+/**
+ * セレクトボックス
+ * @param   {string}value
+ * @param   {void}onChange
+ * @param   {Object[]}options
+ * @param   {string}[className='']
+ * @returns
+ */
+export const Select: React.FC<SelectProps> = ({
+  value,
+  onChange,
+  options,
+  className = "",
+}) => {
   return (
     <select
       value={value}
@@ -20,5 +31,5 @@ export const Select: React.FC<SelectProps> = ({ value, onChange, options, classN
         </option>
       ))}
     </select>
-  )
-}
+  );
+};

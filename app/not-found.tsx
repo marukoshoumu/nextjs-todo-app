@@ -1,6 +1,9 @@
 "use client";
 
-// データが存在しないときの画面
+/**
+ * データが存在しないときの画面
+ * @returns
+ */
 const NotFound = () => {
   return (
     <div>

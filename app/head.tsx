@@ -1,4 +1,7 @@
-// ヘッダー
+/**
+ * ヘッダー
+ * @returns
+ */
 const Head = () => {
   return (
     <>

@@ -10,10 +10,16 @@ type PageProps = {
   todo: Todo;
 };
 
+/**
+ * TODO編集ページ
+ * @param {PageProps}todo
+ * @returns
+ */
 const TodoEditPage = ({ todo }: PageProps) => {
   const router = useRouter();
   const { user } = useStore();
 
+  // 編集ボタン処理
   const onSubmit = async (
     title: string,
     content: string,
@@ -27,17 +33,19 @@ const TodoEditPage = ({ todo }: PageProps) => {
         status: status,
         comment: comment,
       };
+      // TODO更新
       const response = await fetch(`/api/todo/${todo.id}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(updatedTodo),
       });
-
+      // レスポンスチェック
       if (!response.ok) {
         const errorData = await response.json();
         alert(errorData.error || "更新に失敗しました。");
         return;
       }
+      // TODO一覧ページに遷移
       router.push(`/todo`);
       router.refresh();
     }

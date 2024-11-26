@@ -6,8 +6,12 @@ import { headers } from "next/headers";
 
 export const dynamic = "force-dynamic";
 
-// メインページ
+/**
+ * メインページ
+ * @returns
+ */
 const TodoPage = async () => {
+  // セッション取得
   const { data, error } = await createClient().auth.getSession();
   if (error) {
     console.error(error.message);
@@ -18,14 +22,18 @@ const TodoPage = async () => {
   console.log("session", session);
   let todos = [];
   try {
+    // ホストとプロトコルを取得
     const headersData = headers();
     const protocol = headersData.get("x-forwarded-proto") || "http";
     const host = headersData.get("host");
+    // 絶対パス
     const apiBase = `${protocol}://${host}`;
+    // TODO単一行検索
     const response = await fetch(
       `${apiBase}/api/todo?userId=${session?.user.id}`
     );
 
+    // レスポンスチェック
     if (!response.ok) {
       const errorData = await response.json();
       console.error(errorData.error);
