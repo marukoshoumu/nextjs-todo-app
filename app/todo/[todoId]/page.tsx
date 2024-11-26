@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import TodoDetail from "../../components/pages/TodoDetailPage";
 import type { TodoListType } from "../../../utils/todo.types";
-import { headers } from "next/headers";
+import getApiBase from "@/utils/apibase";
 
 type PageProps = {
   params: Promise<{
@@ -15,12 +15,7 @@ type PageProps = {
  * @returns
  */
 const TodoDetailPage = async ({ params }: PageProps) => {
-  // ホストとプロトコルを取得
-  const headersData = headers();
-  const protocol = headersData.get("x-forwarded-proto") || "http";
-  const host = headersData.get("host");
-  // 絶対パス
-  const apiBase = `${protocol}://${host}`;
+  const apiBase = getApiBase();
   // Todo単一行検索
   const response = await fetch(`${apiBase}/api/todo/${(await params).todoId}`, {
     method: "GET",

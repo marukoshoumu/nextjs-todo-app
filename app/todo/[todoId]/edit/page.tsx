@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import TodoEdit from "../../../components/pages/TodoEditPage";
-import { headers } from "next/headers";
+import getApiBase from "@/utils/apibase";
 
 type PageProps = {
   params: Promise<{
@@ -14,12 +14,8 @@ type PageProps = {
  * @returns
  */
 const TodoEditPage = async ({ params }: PageProps) => {
-  // ホストとプロトコル取得
-  const headersData = headers();
-  const protocol = headersData.get("x-forwarded-proto") || "http";
-  const host = headersData.get("host");
   // 絶対パス
-  const apiBase = `${protocol}://${host}`;
+  const apiBase = getApiBase();
   // Todo単一行検索
   const response = await fetch(`${apiBase}/api/todo/${(await params).todoId}`, {
     method: "GET",

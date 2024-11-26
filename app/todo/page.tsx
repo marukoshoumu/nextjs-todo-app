@@ -2,7 +2,7 @@ import { Suspense } from "react";
 import Loading from "../loading";
 import TodoListPage from "../components/pages/TodoListPage";
 import { createClient } from "@/utils/supabase-server";
-import { headers } from "next/headers";
+import getApiBase from "@/utils/apibase";
 
 export const dynamic = "force-dynamic";
 
@@ -22,12 +22,8 @@ const TodoPage = async () => {
   console.log("session", session);
   let todos = [];
   try {
-    // ホストとプロトコルを取得
-    const headersData = headers();
-    const protocol = headersData.get("x-forwarded-proto") || "http";
-    const host = headersData.get("host");
     // 絶対パス
-    const apiBase = `${protocol}://${host}`;
+    const apiBase = getApiBase();
     // TODO単一行検索
     const response = await fetch(
       `${apiBase}/api/todo?userId=${session?.user.id}`
